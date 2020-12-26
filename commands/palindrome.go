@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"unicode/utf8"
+
 	"github.com/Kolbasen/lab4/engine"
 )
 
@@ -9,11 +11,15 @@ type PalindromeCommand struct {
 	Arg string
 }
 
-func reverse(s string) (result string) {
-	for _, v := range s {
-		result = string(v) + result
+func reverse(s string) string {
+	size := len(s)
+	buf := make([]byte, size)
+	for start := 0; start < size; {
+		r, n := utf8.DecodeRuneInString(s[start:])
+		start += n
+		utf8.EncodeRune(buf[size-start:], r)
 	}
-	return result
+	return string(buf)
 }
 
 func isPalindrome(str string) bool {
