@@ -1,0 +1,3 @@
+print hello
+palindrome hello
+palindrome lool
